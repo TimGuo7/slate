@@ -83,7 +83,7 @@ export default async (req, res) => {
   objects = objects.filter((file) => file.ownerId === id);
 
   if (!objects.length) {
-    return res.status(400).send({ decorator: "SERVER_REMOVE_DATA_NOT_ALLOWED", error: true });
+    return res.status(403).send({ decorator: "SERVER_REMOVE_DATA_NOT_ALLOWED", error: true });
   }
   ids = objects.map((file) => file.id);
 

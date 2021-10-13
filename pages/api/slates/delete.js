@@ -21,7 +21,7 @@ export default async (req, res) => {
   }
 
   if (slate.ownerId !== id) {
-    return res.status(400).send({ decorator: "SERVER_DELETE_SLATE_NOT_ALLOWED", error: true });
+    return res.status(403).send({ decorator: "SERVER_DELETE_SLATE_NOT_ALLOWED", error: true });
   }
 
   const deleteResponse = await Data.deleteSlateById({ id: slate.id });

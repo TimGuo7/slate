@@ -31,7 +31,7 @@ export default async (req, res) => {
   }
 
   if (slate.ownerId !== id) {
-    return res.status(400).send({ decorator: "SERVER_UPDATE_SLATE_NOT_ALLOWED", error: true });
+    return res.status(403).send({ decorator: "SERVER_UPDATE_SLATE_NOT_ALLOWED", error: true });
   }
 
   if (typeof updates.isPublic !== "undefined" && slate.isPublic !== updates.isPublic) {
