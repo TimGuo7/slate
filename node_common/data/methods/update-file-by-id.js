@@ -28,7 +28,7 @@ export default async ({ id, data }) => {
 
       let updatedFile = Serializers.getUpdatedFile(currentFile, updateObject);
 
-      if (currentFile.ownerId !== updatedFile.ownerId) {
+      if (updatedFile.ownerId && currentFile.ownerId !== updatedFile.ownerId) {
         return null;
       }
 
