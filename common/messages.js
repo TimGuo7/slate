@@ -47,6 +47,7 @@ export const error = {
 
   //File delete
   SERVER_REMOVE_DATA_NO_IDS: "The file to delete was not specified",
+  SERVER_REMOVE_DATA_NOT_ALLOWED: "You are not the owner of those files",
 
   //Save copy
   SERVER_SAVE_COPY_NO_CIDS: "The file to save was not specified",
@@ -91,6 +92,7 @@ export const error = {
     "We're having difficulty locating that collection. It may have already been deleted",
   SERVER_DELETE_SLATE_FAILED:
     "We're having trouble deleting that collection right now, please try again later",
+  SERVER_DELETE_SLATE_NOT_ALLOWED: "You are not the owner of that slate",
 
   //Get slate
   SERVER_GET_SERIALIZED_SLATE_SLATE_NOT_FOUND:
@@ -118,6 +120,7 @@ export const error = {
   SERVER_UPDATE_SLATE_NAME_TAKEN:
     "You already have a collection with that name. Collection names must be unique",
   SERVER_UPDATE_SLATE_FAILED: "We are having trouble updating that collection right now",
+  SERVER_UPDATE_SLATE_NOT_ALLOWED: "You are not the owner of that slate",
 
   //Create user
   SERVER_CREATE_USER_NOT_ALLOWED: "You can only create users while on slate.host",

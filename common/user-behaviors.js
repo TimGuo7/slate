@@ -165,7 +165,7 @@ export const deleteFiles = async (fileIds = [], noAlert) => {
       return false;
     }
 
-    Events.dispatchMessage({ message: "Files successfully deleted!", status: "INFO" });
+    Events.dispatchMessage({ message: "Successfully deleted!", status: "INFO" });
 
     return response;
   }

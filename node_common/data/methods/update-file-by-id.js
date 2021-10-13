@@ -28,6 +28,10 @@ export default async ({ id, data }) => {
 
       let updatedFile = Serializers.getUpdatedFile(currentFile, updateObject);
 
+      if (currentFile.ownerId !== updatedFile.ownerId) {
+        return null;
+      }
+
       const response = await DB.from("files").where("id", id).update(updatedFile).returning("*");
       const index = response ? response.pop() : null;
       return JSON.parse(JSON.stringify(index));

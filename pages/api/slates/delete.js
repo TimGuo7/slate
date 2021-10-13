@@ -20,6 +20,10 @@ export default async (req, res) => {
     return res.status(500).send({ decorator: "SERVER_DELETE_SLATE_SLATE_NOT_FOUND", error: true });
   }
 
+  if (slate.ownerId !== id) {
+    return res.status(400).send({ decorator: "SERVER_DELETE_SLATE_NOT_ALLOWED", error: true });
+  }
+
   const deleteResponse = await Data.deleteSlateById({ id: slate.id });
 
   if (!deleteResponse) {
