@@ -7,8 +7,8 @@ import { css } from "@emotion/react";
 
 import Prism from "prismjs";
 import WebsitePrototypeWrapper from "~/components/core/WebsitePrototypeWrapper";
-import WebsitePrototypeHeader from "~/components/core/NewWebsitePrototypeHeader";
-import WebsitePrototypeFooter from "~/components/core/NewWebsitePrototypeFooter";
+import WebsitePrototypeHeader from "~/components/core/WebsiteHeader";
+import WebsitePrototypeFooter from "~/components/core/WebsiteFooter";
 
 const SLATE_CORE_TEAM = [
   {

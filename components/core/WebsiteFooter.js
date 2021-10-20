@@ -15,7 +15,7 @@ const STYLES_ROOT = css`
   }
 `;
 const STYLES_CONTAINER = css`
-  max-width: 1440px;
+  max-width: 1080px;
   margin: 0 auto;
   width: 100%;
   align-items: top;
@@ -74,7 +74,7 @@ const styleFlexFull = {
   justifyContent: `space-between`,
 };
 
-export const NewWebsitePrototypeFooter = (props) => {
+export const WebsiteFooter = (props) => {
   return (
     <div css={STYLES_ROOT}>
       <div css={STYLES_CONTAINER} style={props.style}>
@@ -83,16 +83,7 @@ export const NewWebsitePrototypeFooter = (props) => {
             <span style={{ fontFamily: `${Constants.font.semiBold}`, marginRight: `16px` }}>
               Slate{" "}
             </span>{" "}
-            Decentralized file sharing network. Powered by{" "}
-            <a css={STYLES_LINK} href="https://textile.io" target="_blank">
-              Textile
-            </a>{" "}
-            and{" "}
-            <a css={STYLES_LINK} href="https://filecoin.io" target="_blank">
-              Filecoin
-            </a>
-            .
-            <br />
+            Your personal search engine
           </p>
         </div>
         <br />
@@ -137,10 +128,6 @@ export const NewWebsitePrototypeFooter = (props) => {
             >
               Community
             </a>
-            <br />
-            {/* <a css={STYLES_LINK} href="/_/system">
-              Design system
-            </a> */}
           </div>
         </div>
         <br />
@@ -162,4 +149,4 @@ export const NewWebsitePrototypeFooter = (props) => {
   );
 };
 
-export default NewWebsitePrototypeFooter;
+export default WebsiteFooter;

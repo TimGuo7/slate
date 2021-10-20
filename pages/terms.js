@@ -5,8 +5,8 @@ import * as Constants from "~/common/constants";
 import { css } from "@emotion/react";
 
 import WebsitePrototypeWrapper from "~/components/core/WebsitePrototypeWrapper";
-import WebsitePrototypeHeader from "~/components/core/NewWebsitePrototypeHeader";
-import WebsitePrototypeFooter from "~/components/core/NewWebsitePrototypeFooter";
+import WebsitePrototypeHeader from "~/components/core/WebsiteHeader";
+import WebsitePrototypeFooter from "~/components/core/WebsiteFooter";
 
 const STYLES_ROOT = css`
   padding: 0 88px 128px 88px;

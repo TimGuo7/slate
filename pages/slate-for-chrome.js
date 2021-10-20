@@ -2,8 +2,8 @@ import * as React from "react";
 import * as Constants from "~/common/constants";
 
 import WebsitePrototypeWrapper from "~/components/core/WebsitePrototypeWrapper";
-import WebsitePrototypeHeader from "~/components/core/NewWebsitePrototypeHeader";
-import WebsitePrototypeFooter from "~/components/core/NewWebsitePrototypeFooter";
+import WebsitePrototypeHeader from "~/components/core/WebsiteHeader";
+import WebsitePrototypeFooter from "~/components/core/WebsiteFooter";
 
 import { css } from "@emotion/react";
 
