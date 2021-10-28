@@ -17,10 +17,22 @@ const STYLES_SCENE_PAGE = css`
 `;
 
 const STYLES_FILTER_TITLE_WRAPPER = css`
+  ${Styles.MOBILE_HIDDEN};
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const STYLES_FILTER_POPUP_WRAPPER = (theme) => css`
+  position: absolute;
+  top: calc(${theme.sizes.filterNavbar}px + 4px);
+  left: 4px;
+  width: 100%;
+  @media (max-width: ${theme.sizes.mobile}px) {
+    top: ${theme.sizes.filterNavbar}px;
+    left: 0px;
+  }
 `;
 
 export default function SceneFilesFolder({ viewer, page, onAction, isMobile }) {
@@ -48,9 +60,21 @@ export default function SceneFilesFolder({ viewer, page, onAction, isMobile }) {
         />
         <Filter.Provider viewer={viewer}>
           <Filter.NavbarPortal>
-            <div css={Styles.CONTAINER_CENTERED}>
-              <Filter.SidebarTrigger />
+            <div css={STYLES_FILTER_POPUP_WRAPPER}>
+              <Filter.Popup viewer={viewer} />
             </div>
+
+            <div css={Styles.CONTAINER_CENTERED}>
+              <div css={Styles.MOBILE_HIDDEN}>
+                <Filter.SidebarTrigger />
+              </div>
+              <Filter.PopupTrigger isMobile={isMobile} style={{ marginLeft: 2 }}>
+                <span css={Styles.MOBILE_ONLY} style={{ marginRight: 8 }}>
+                  <Filter.Title />
+                </span>
+              </Filter.PopupTrigger>
+            </div>
+
             <div css={STYLES_FILTER_TITLE_WRAPPER}>
               <Filter.Title />
             </div>
@@ -58,7 +82,7 @@ export default function SceneFilesFolder({ viewer, page, onAction, isMobile }) {
           </Filter.NavbarPortal>
 
           <div css={Styles.HORIZONTAL_CONTAINER}>
-            <Filter.Sidebar />
+            <Filter.Sidebar viewer={viewer} isMobile={isMobile} />
             <Filter.Content onAction={onAction} viewer={viewer} page={page} />
           </div>
         </Filter.Provider>

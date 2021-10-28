@@ -12,7 +12,7 @@ const STYLES_DATAVIEWER_WRAPPER = (theme) => css`
   min-height: 100vh;
   padding: calc(20px + ${theme.sizes.filterNavbar}px) 24px 44px;
   @media (max-width: ${theme.sizes.mobile}px) {
-    padding: 31px 16px 44px;
+    padding: calc(31px + ${theme.sizes.filterNavbar}px) 16px 44px;
   }
 `;
 
