@@ -1,26 +1,29 @@
 import * as React from "react";
-
-import { useWorker } from "~/common/hooks";
+import { useIsomorphicLayoutEffect } from "~/common/hooks";
+import * as FilterUtilities from "~/common/filter-utilities";
 
 const UploadContext = React.createContext({});
-
 export const useFilterContext = () => React.useContext(UploadContext);
 
 export const Provider = ({ children, viewer }) => {
   const [isSidebarVisible, toggleSidebar] = useFilterSidebar();
 
-  const [filterState, { setFilterType, setFilterObjects, resetFilterState }] = useFilter({
-    library: viewer.library,
-  });
+  const [isPopupVisible, { hidePopup, togglePopup }] = useFilterPopup();
 
-  const workerState = useFilterWorker({ filterState, setFilterObjects, library: viewer.library });
+  const [filterState, { setFilterType }] = useFilter({
+    viewer: viewer,
+  });
 
   const contextValue = React.useMemo(
     () => [
-      { isSidebarVisible, filterState, ...workerState },
-      { toggleSidebar, setFilterType, resetFilterState },
+      {
+        sidebarState: { isVisible: isSidebarVisible },
+        popupState: { isVisible: isPopupVisible },
+        filterState,
+      },
+      { toggleSidebar, setFilterType, hidePopup, togglePopup },
     ],
-    [isSidebarVisible, filterState, workerState]
+    [isSidebarVisible, isPopupVisible, filterState]
   );
 
   return <UploadContext.Provider value={contextValue}>{children}</UploadContext.Provider>;
@@ -32,12 +35,22 @@ const useFilterSidebar = () => {
   return [isSidebarVisible, toggleSidebar];
 };
 
-const useFilter = ({ library }) => {
+const useFilterPopup = () => {
+  const [isPopupVisible, setPopupVisibility] = React.useState(false);
+
+  const hidePopup = () => setPopupVisibility(false);
+  const togglePopup = () => setPopupVisibility((prev) => !prev);
+  return [isPopupVisible, { hidePopup, togglePopup }];
+};
+
+const useFilter = ({ viewer }) => {
   const DEFAULT_STATE = {
-    view: "initial",
-    subview: undefined,
-    type: "library",
-    objects: library,
+    view: FilterUtilities.VIEWS_IDS.initial,
+    type: FilterUtilities.TYPES_IDS.initial.library,
+    title: "Library",
+    // NOTE(amine): some filters may require additional information to work (ex: tags needs `id` to be able to get objects)
+    context: {},
+    objects: viewer.library,
     search: {
       objects: [],
       tags: [],
@@ -45,48 +58,24 @@ const useFilter = ({ library }) => {
       endDate: null,
     },
   };
-
   const [filterState, setFilterState] = React.useState(DEFAULT_STATE);
 
-  const setFilterType = ({ view, subview = undefined, type }) =>
-    setFilterState((prev) => ({ ...prev, view, subview, type }));
+  const setFilterType = ({ view, type, title, context }) =>
+    setFilterState((prev) => ({ ...prev, view, type, title, context }));
 
   const setFilterObjects = (objects) => setFilterState((prev) => ({ ...prev, objects }));
+  useIsomorphicLayoutEffect(() => {
+    if (filterState.type === FilterUtilities.TYPES_IDS.initial.library) {
+      setFilterObjects(viewer.library);
+      return;
+    }
 
-  const resetFilterState = () => setFilterState(DEFAULT_STATE);
+    if (filterState.type === FilterUtilities.TYPES_IDS.initial.tags) {
+      const { slateId } = filterState.context;
+      setFilterObjects(viewer.slates.find((slate) => slate.id === slateId)?.objects || []);
+      return;
+    }
+  }, [filterState.type, filterState.context, filterState.view, viewer]);
 
-  return [filterState, { setFilterType, resetFilterState, setFilterObjects }];
-};
-
-const useFilterWorker = ({ filterState, setFilterObjects, library }) => {
-  const DEFAULT_STATE = { loading: false, error: false };
-  const [workerState, setWorkerState] = React.useState(DEFAULT_STATE);
-
-  const { view, subview, type } = filterState;
-
-  /**
-   * NOTE(amine): Web workers are usually pretty fast,
-   * but if it takes more than 500ms to handle a task, we'll show a loading screen
-   */
-  const timeoutRef = React.useRef();
-
-  useWorker(
-    {
-      onStart: (worker) => {
-        worker.postMessage({ objects: library, view, subview, type });
-        timeoutRef.current = setTimeout(() => {
-          setWorkerState((prev) => ({ ...prev, loading: true }));
-        }, 500);
-      },
-      onError: () => setWorkerState((prev) => ({ ...prev, error: true })),
-      onMessage: (e) => {
-        clearTimeout(timeoutRef.current);
-        setWorkerState(DEFAULT_STATE);
-        setFilterObjects(e.data);
-      },
-    },
-    [view, subview, library, type]
-  );
-
-  return workerState;
+  return [filterState, { setFilterType, setFilterObjects }];
 };
