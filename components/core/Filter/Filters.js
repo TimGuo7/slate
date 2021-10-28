@@ -2,6 +2,7 @@ import * as React from "react";
 import * as SVG from "~/common/svg";
 import * as Styles from "~/common/styles";
 import * as Typography from "~/components/system/components/Typography";
+import * as FilterUtilities from "~/common/filter-utilities";
 
 import { css } from "@emotion/react";
 import { useFilterContext } from "~/components/core/Filter/Provider";
@@ -19,7 +20,7 @@ const STYLES_FILTER_BUTTON = (theme) => css`
   align-items: center;
   width: 100%;
   ${Styles.BUTTON_RESET};
-  padding: 4px 8px;
+  padding: 5px 8px 3px;
   border-radius: 8px;
   color: ${theme.semantic.textBlack};
   &:hover {
@@ -59,7 +60,7 @@ const FilterButton = ({ children, Icon, isSelected, ...props }) => (
 const FilterSection = ({ title, children, ...props }) => (
   <div {...props}>
     {title && (
-      <Typography.H6 style={{ paddingLeft: 8 }} color="textGray">
+      <Typography.H6 style={{ paddingLeft: 8, marginBottom: 4 }} color="textGray">
         {title}
       </Typography.H6>
     )}
@@ -71,143 +72,65 @@ const FilterSection = ({ title, children, ...props }) => (
  *  InitialFilters
  * -----------------------------------------------------------------------------------------------*/
 
-function Initial({ filters, goToBrowserView }) {
-  const [{ filterState }, { setFilterType, resetFilterState }] = useFilterContext();
+function Library() {
+  const [{ filterState }, { setFilterType, hidePopup }] = useFilterContext();
   const currentFilterType = filterState.type;
-  const currentFilterView = filterState.view;
 
-  const changeFilter = ({ type }) => setFilterType({ view: currentFilterView, type });
+  const libraryFilterType = FilterUtilities.TYPES_IDS.initial.library;
 
   return (
     <>
-      {/** Breadcrumb All */}
       <FilterSection>
         <FilterButton
           Icon={SVG.Clock}
-          isSelected={currentFilterType === filters.library}
-          onClick={resetFilterState}
+          isSelected={currentFilterType === libraryFilterType}
+          onClick={() => {
+            setFilterType({
+              view: FilterUtilities.VIEWS_IDS.initial,
+              type: libraryFilterType,
+              title: "Library",
+            });
+            hidePopup();
+          }}
         >
           My Library
-        </FilterButton>
-      </FilterSection>
-      <FilterSection title="Connected" style={{ marginTop: 12 }}>
-        <FilterButton Icon={SVG.Layout} onClick={goToBrowserView}>
-          Browser
-        </FilterButton>
-      </FilterSection>
-      <FilterSection style={{ marginTop: 12 }} title="Types">
-        <FilterButton
-          Icon={SVG.Image}
-          isSelected={currentFilterType === filters.images}
-          onClick={() => changeFilter({ type: filters.images })}
-        >
-          Images
-        </FilterButton>
-        <FilterButton
-          Icon={SVG.Radio}
-          isSelected={currentFilterType === filters.audios}
-          onClick={() => changeFilter({ type: filters.audios })}
-        >
-          Audios
-        </FilterButton>
-        <FilterButton
-          Icon={SVG.Video}
-          isSelected={currentFilterType === filters.videos}
-          onClick={() => changeFilter({ type: filters.videos })}
-        >
-          Videos
-        </FilterButton>
-        <FilterButton
-          Icon={SVG.FileText}
-          isSelected={currentFilterType === filters.documents}
-          onClick={() => changeFilter({ type: filters.documents })}
-        >
-          Documents
         </FilterButton>
       </FilterSection>
     </>
   );
 }
 
-/* -------------------------------------------------------------------------------------------------
- *  Browser Filters
- * -----------------------------------------------------------------------------------------------*/
-
-function Browser({ filters, goToSavedSubview }) {
-  const [{ filterState }] = useFilterContext();
+function Tags({ viewer, ...props }) {
+  const [{ filterState }, { setFilterType, hidePopup }] = useFilterContext();
   const currentFilterType = filterState.type;
 
+  const tagFilterType = FilterUtilities.TYPES_IDS.initial.tags;
+
+  const checkIsTagSelected = (slateId) =>
+    currentFilterType === tagFilterType && filterState?.context?.slateId === slateId;
+
+  const setSelectedTag = (slate) =>
+    setFilterType({
+      view: FilterUtilities.VIEWS_IDS.initial,
+      type: tagFilterType,
+      title: "#" + slate.slatename,
+      context: { slateId: slate.id },
+    });
+
   return (
-    <FilterSection>
-      <FilterButton Icon={SVG.Clock} isSelected={currentFilterType === filters.all}>
-        All
-      </FilterButton>
-      <FilterButton disabled Icon={SVG.Clock}>
-        History
-      </FilterButton>
-      <FilterButton disabled Icon={SVG.Bookmark}>
-        Bookmarks
-      </FilterButton>
-      <FilterButton Icon={SVG.FilePlus} onClick={goToSavedSubview}>
-        Saved
-      </FilterButton>
+    <FilterSection title="Tags" {...props}>
+      {viewer.slates.map((slate) => (
+        <FilterButton
+          Icon={slate.isPublic ? SVG.Hash : SVG.SecurityLock}
+          key={slate.id}
+          isSelected={checkIsTagSelected(slate.id)}
+          onClick={() => (setSelectedTag(slate), hidePopup())}
+        >
+          {slate.slatename}
+        </FilterButton>
+      ))}
     </FilterSection>
   );
 }
 
-const BrowserSaved = ({ filters }) => {
-  const [{ filterState }, { setFilterType }] = useFilterContext();
-  const currentFilterType = filterState.type;
-
-  const changeSavedFilterType = (type) =>
-    setFilterType({ view: filterState.view, subview: filterState.subview, type });
-
-  return (
-    <FilterSection>
-      <FilterButton
-        Icon={SVG.Clock}
-        isSelected={currentFilterType === filters.all}
-        onClick={() => changeSavedFilterType(filters.all)}
-      >
-        All
-      </FilterButton>
-      <FilterButton
-        Icon={SVG.Twitter}
-        isSelected={currentFilterType === filters.twitter}
-        onClick={() => changeSavedFilterType(filters.twitter)}
-      >
-        Twitter
-      </FilterButton>
-      <FilterButton
-        Icon={SVG.Youtube}
-        isSelected={currentFilterType === filters.youtube}
-        onClick={() => changeSavedFilterType(filters.youtube)}
-      >
-        Youtube
-      </FilterButton>
-      <FilterButton
-        Icon={SVG.Github}
-        isSelected={currentFilterType === filters.github}
-        onClick={() => changeSavedFilterType(filters.github)}
-      >
-        Github
-      </FilterButton>
-      <FilterButton
-        Icon={SVG.Twitch}
-        isSelected={currentFilterType === filters.twitch}
-        onClick={() => changeSavedFilterType(filters.twitch)}
-      >
-        Twitch
-      </FilterButton>
-      <FilterButton
-        Icon={SVG.Instagram}
-        isSelected={currentFilterType === filters.instagram}
-        onClick={() => changeSavedFilterType(filters.instagram)}
-      >
-        Instagram
-      </FilterButton>
-    </FilterSection>
-  );
-};
-
-export { Initial, Browser, BrowserSaved };
+export { Library, Tags };
