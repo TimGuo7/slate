@@ -6,16 +6,20 @@ export const Divider = ({
   width = "100%",
   height = "0.5px",
   color = Constants.system.grayLight4,
+  css,
   ...props
 }) => {
   return (
     <div
-      css={(theme) => ({
-        height,
-        width,
-        minHeight: height,
-        backgroundColor: theme.system?.[color] || theme.semantic?.[color] || color,
-      })}
+      css={[
+        (theme) => ({
+          height,
+          width,
+          minHeight: height,
+          backgroundColor: theme.system?.[color] || theme.semantic?.[color] || color,
+        }),
+        css,
+      ]}
       {...props}
     />
   );
