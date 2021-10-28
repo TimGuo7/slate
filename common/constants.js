@@ -8,7 +8,7 @@ export const sizes = {
   navigation: 288,
   sidebar: 416,
   // NOTE(amine): header's height + filter navbar's height
-  header: 52,
+  header: 55,
   filterNavbar: 40,
   tablet: 960,
   desktop: 1024,

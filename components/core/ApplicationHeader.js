@@ -49,7 +49,6 @@ const STYLES_APPLICATION_HEADER_BACKGROUND = (theme) => css`
   left: 0;
   z-index: -1;
   background-color: ${theme.system.white};
-  box-shadow: 0 0 0 1px ${theme.semantic.bgGrayLight};
   @supports ((-webkit-backdrop-filter: blur(75px)) or (backdrop-filter: blur(75px))) {
     -webkit-backdrop-filter: blur(75px);
     backdrop-filter: blur(75px);
@@ -103,9 +102,10 @@ const STYLES_BACKGROUND = css`
   animation: fade-in 200ms ease-out;
 `;
 
-const STYLES_HEADER = css`
-  z-index: ${Constants.zindex.header};
+const STYLES_HEADER = (theme) => css`
+  z-index: ${theme.zindex.header};
   width: 100vw;
+  height: ${theme.sizes.header}px;
   position: fixed;
   right: 0;
   top: 0;
@@ -116,7 +116,7 @@ const STYLES_FILTER_NAVBAR = (theme) => css`
   width: 100vw;
   position: fixed;
   right: 0;
-  top: ${theme.sizes.header};
+  top: ${theme.sizes.header}px;
 `;
 
 const STYLES_UPLOAD_BUTTON = css`
