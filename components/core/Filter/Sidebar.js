@@ -2,10 +2,9 @@ import * as React from "react";
 import * as SVG from "~/common/svg";
 import * as Styles from "~/common/styles";
 import * as Filters from "~/components/core/Filter/Filters";
+import * as Constants from "~/common/constants";
 
-import * as FilterUtilities from "~/common/filter-utilities";
 import { useFilterContext } from "~/components/core/Filter/Provider";
-import { Show } from "~/components/utility/Show";
 import { css } from "@emotion/react";
 
 /* -------------------------------------------------------------------------------------------------
@@ -23,19 +22,16 @@ const STYLES_SIDEBAR_TRIGGER = (theme) => css`
   }
 `;
 
-export function SidebarTrigger() {
-  const [{ isSidebarVisible }, { toggleSidebar }] = useFilterContext();
+export function SidebarTrigger({ css }) {
+  const [{ sidebarState }, { toggleSidebar }] = useFilterContext();
   return (
     <button
       onClick={toggleSidebar}
-      css={[
-        STYLES_SIDEBAR_TRIGGER,
-        (theme) =>
-          css({
-            backgroundColor: isSidebarVisible ? theme.semantic.bgGrayLight : "none",
-            color: isSidebarVisible ? theme.semantic.textBlack : theme.semantic.textGray,
-          }),
-      ]}
+      css={[STYLES_SIDEBAR_TRIGGER, css]}
+      style={{
+        backgroundColor: sidebarState.isVisible ? Constants.semantic.bgGrayLight : "unset",
+        color: sidebarState.isVisible ? Constants.semantic.textBlack : Constants.semantic.textGray,
+      }}
     >
       <SVG.Sidebar style={{ display: "block" }} />
     </button>
@@ -45,17 +41,6 @@ export function SidebarTrigger() {
 /* -------------------------------------------------------------------------------------------------
  *  Sidebar
  * -----------------------------------------------------------------------------------------------*/
-
-export function Sidebar() {
-  const [{ isSidebarVisible }] = useFilterContext();
-  return (
-    <Show when={isSidebarVisible}>
-      <div css={STYLES_SIDEBAR_FILTER_WRAPPER}>
-        <SidebarContent />
-      </div>
-    </Show>
-  );
-}
 
 const STYLES_SIDEBAR_FILTER_WRAPPER = (theme) => css`
   position: sticky;
@@ -67,46 +52,15 @@ const STYLES_SIDEBAR_FILTER_WRAPPER = (theme) => css`
   background-color: ${theme.semantic.bgLight};
 `;
 
-/* -------------------------------------------------------------------------------------------------
- *  SidebarContent
- * -----------------------------------------------------------------------------------------------*/
+export function Sidebar({ viewer, isMobile }) {
+  const [{ sidebarState }] = useFilterContext();
 
-function SidebarContent() {
-  const [{ filterState }, { setFilterType }] = useFilterContext();
-  const currentView = filterState.view;
-  const currentSubview = filterState.subview;
-
-  const { FILTER_VIEWS_IDS, FILTER_SUBVIEWS_IDS } = FilterUtilities;
-  const { filters, subviews } = FilterUtilities.getViewData(currentView);
-
-  const changeFilterView = (view) => {
-    const { filters } = FilterUtilities.getViewData(view);
-    setFilterType({ view: view, type: filters.initial });
-  };
-
-  const changeFilterSubview = (subview) => {
-    const initialType = subviews[subview].filters.initial;
-    setFilterType({ view: currentView, subview, type: initialType });
-  };
-
-  if (currentView === FILTER_VIEWS_IDS.browser) {
-    if (currentSubview === FILTER_SUBVIEWS_IDS.browser.saved) {
-      const { filters } = subviews[currentSubview];
-      return <Filters.BrowserSaved filters={filters} />;
-    }
-
-    return (
-      <Filters.Browser
-        filters={filters}
-        goToSavedSubview={() => changeFilterSubview(FILTER_SUBVIEWS_IDS.browser.saved)}
-      />
-    );
-  }
+  if (!sidebarState.isVisible || isMobile) return null;
 
   return (
-    <Filters.Initial
-      filters={filters}
-      goToBrowserView={() => changeFilterView(FILTER_VIEWS_IDS.browser)}
-    />
+    <div css={STYLES_SIDEBAR_FILTER_WRAPPER}>
+      <Filters.Library />
+      <Filters.Tags viewer={viewer} style={{ marginTop: 12 }} />
+    </div>
   );
 }
