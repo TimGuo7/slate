@@ -2,7 +2,6 @@ import * as React from "react";
 import * as System from "~/components/system";
 
 import { Navbar, NavbarPortal } from "~/components/core/Filter/Navbar";
-import { Breadcrumb } from "~/components/core/Filter/Breadcrumb";
 import { Provider } from "~/components/core/Filter/Provider";
 import { Sidebar, SidebarTrigger } from "~/components/core/Filter/Sidebar";
 import { Content } from "~/components/core/Filter/Content";
@@ -22,14 +21,4 @@ function Actions() {
   return <div />;
 }
 
-export {
-  Title,
-  Actions,
-  Sidebar,
-  SidebarTrigger,
-  Provider,
-  Navbar,
-  Content,
-  Breadcrumb,
-  NavbarPortal,
-};
+export { Title, Actions, Sidebar, SidebarTrigger, Provider, Navbar, Content, NavbarPortal };

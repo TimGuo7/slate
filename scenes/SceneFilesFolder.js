@@ -50,7 +50,6 @@ export default function SceneFilesFolder({ viewer, page, onAction, isMobile }) {
           <Filter.NavbarPortal>
             <div css={Styles.CONTAINER_CENTERED}>
               <Filter.SidebarTrigger />
-              <Filter.Breadcrumb style={{ marginLeft: 16 }} />
             </div>
             <div css={STYLES_FILTER_TITLE_WRAPPER}>
               <Filter.Title />
