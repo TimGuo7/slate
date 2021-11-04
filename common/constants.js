@@ -140,13 +140,13 @@ export const shadow = {
 export const zindex = {
   navigation: 1,
   body: 2,
-  sidebar: 5,
   alert: 3,
   header: 4,
   intercom: 4,
+  sidebar: 5,
   modal: 6,
-  tooltip: 8,
   jumper: 7,
+  tooltip: 8,
   cta: 9,
 };
 
