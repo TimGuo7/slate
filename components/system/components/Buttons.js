@@ -112,6 +112,7 @@ const STYLES_BUTTON_SECONDARY = css`
   color: ${Constants.system.black};
   background-color: ${Constants.system.grayLight5};
   box-shadow: 0 0 0 1px ${Constants.semantic.bgLight} inset;
+  text-decoration: none;
 
   :hover {
     background-color: ${Constants.system.grayLight4};
@@ -152,6 +153,16 @@ export const ButtonSecondary = (props) => {
         children={props.children}
         type={props.label}
         htmlFor={props.htmlFor}
+      />
+    );
+  }
+
+  if (props.type === "link") {
+    return (
+      <a
+        css={props.transparent ? STYLES_BUTTON_SECONDARY_TRANSPARENT : STYLES_BUTTON_SECONDARY}
+        style={{ width: props.full ? "100%" : "auto", ...props.style }}
+        {...props}
       />
     );
   }
