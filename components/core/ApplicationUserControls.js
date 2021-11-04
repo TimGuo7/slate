@@ -3,9 +3,8 @@ import * as Constants from "~/common/constants";
 import * as Styles from "~/common/styles";
 import * as UserBehaviors from "~/common/user-behaviors";
 import * as Strings from "~/common/strings";
-import * as Environment from "~/common/environment";
 
-import { ButtonPrimaryFull, PopoverNavigation } from "~/components/system";
+import { PopoverNavigation } from "~/components/system";
 import { css } from "@emotion/react";
 import { Link } from "~/components/core/Link";
 import { Boundary } from "~/components/system/components/fragments/Boundary";
@@ -13,6 +12,7 @@ import { H4, P3 } from "~/components/system/components/Typography";
 
 import ProfilePhoto from "~/components/core/ProfilePhoto";
 import DataMeter from "~/components/core/DataMeter";
+import DownloadExtensionButton from "~/components/core/Extension/DownloadExtensionButton";
 
 const STYLES_HEADER = css`
   position: relative;
@@ -82,37 +82,6 @@ const STYLES_SECTION_ITEM_HOVER = (theme) => css`
 `;
 
 export class ApplicationUserControlsPopup extends React.Component {
-  state = {
-    isExtensionDownloaded: false,
-  };
-
-  componentDidMount() {
-    if (document) {
-      const isExtensionDownloaded = this._checkIfExtensionIsDownloaded();
-      this.setState({ isExtensionDownloaded });
-    }
-  }
-
-  _checkIfExtensionIsDownloaded = () => {
-    const extensionElement = document.getElementById("browser_extension");
-    if (!extensionElement) return false;
-    return extensionElement.className.includes("isDownloaded");
-  };
-
-  _handleExtensionDownloadLink = () => {
-    const testUserAgent = (regex) => regex.test(window.navigator.userAgent);
-
-    const isFirefox = testUserAgent(/firefox/i);
-    const firefoxLink = Environment.EXTENSION_FIREFOX;
-    if (isFirefox && firefoxLink) return window.open(firefoxLink, "_blank");
-
-    const isSafari = testUserAgent(/safari/i);
-    const safariLink = Environment.EXTENSION_SAFARI;
-    if (isSafari && safariLink) return window.open(safariLink, "_blank");
-
-    window.open(Environment.EXTENSION_CHROME, "_blank");
-  };
-
   _handleAction = (props) => {
     this.props.onTogglePopup();
     this.props.onAction(props);
@@ -155,23 +124,6 @@ export class ApplicationUserControlsPopup extends React.Component {
           />
         </div>
       </Link>
-    );
-
-    const ExtensionButton = (
-      <div css={Styles.MOBILE_HIDDEN}>
-        <ButtonPrimaryFull
-          style={{
-            padding: "0px 12px",
-            marginTop: "4px",
-            marginBottom: "28px",
-            minHeight: "30px",
-            fontFamily: Constants.font.text,
-          }}
-          onClick={this._handleExtensionDownloadLink}
-        >
-          Install Slate browser extension
-        </ButtonPrimaryFull>
-      </div>
     );
 
     const navigation = [
@@ -222,7 +174,13 @@ export class ApplicationUserControlsPopup extends React.Component {
             this._handleSignOut(e);
           },
         },
-        ...(!this.state.isExtensionDownloaded ? [{ text: ExtensionButton }] : []),
+        {
+          text: (
+            <div css={Styles.MOBILE_HIDDEN}>
+              <DownloadExtensionButton style={{ marginTop: "4px", marginBottom: "28px" }} />
+            </div>
+          ),
+        },
       ],
     ];
 
