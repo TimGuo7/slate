@@ -4,6 +4,7 @@ import * as FileUtilities from "~/common/file-utilities";
 import * as Logging from "~/common/logging";
 
 import { useEventListener } from "~/common/hooks";
+import { useUploadOnboardingContext } from "~/components/core/Onboarding/Upload";
 
 const UploadContext = React.createContext({});
 export const useUploadContext = () => React.useContext(UploadContext);
@@ -201,6 +202,8 @@ const useUpload = () => {
 };
 
 const useUploadOnDrop = ({ upload, page, data, viewer }) => {
+  const onboardingContext = useUploadOnboardingContext();
+
   const handleDragEnter = (e) => e.preventDefault();
   const handleDragLeave = (e) => e.preventDefault();
   const handleDragOver = (e) => e.preventDefault();
@@ -220,16 +223,21 @@ const useUploadOnDrop = ({ upload, page, data, viewer }) => {
       slate = data;
     }
 
+    // NOTE(amine): finish the upload onboarding only if we're at the jumper walkthrough
+    if (onboardingContext.currentStep === onboardingContext.steps.jumperWalkthrough)
+      onboardingContext.goToNextStep();
     upload({ files, slate });
   };
 
   useEventListener({ type: "dragenter", handler: handleDragEnter }, []);
   useEventListener({ type: "dragleave", handler: handleDragLeave }, []);
   useEventListener({ type: "dragover", handler: handleDragOver }, []);
-  useEventListener({ type: "drop", handler: handleDrop }, []);
+  useEventListener({ type: "drop", handler: handleDrop }, [onboardingContext]);
 };
 
 const useUploadFromClipboard = ({ upload, uploadLink, page, data, viewer }) => {
+  const onboardingContext = useUploadOnboardingContext();
+
   const handlePaste = (e) => {
     //NOTE(amine): skip when pasting into an input/textarea or an element with contentEditable set to true
     const eventTargetTag = document?.activeElement.tagName.toLowerCase();
@@ -256,8 +264,11 @@ const useUploadFromClipboard = ({ upload, uploadLink, page, data, viewer }) => {
     const { files } = FileUtilities.formatPastedImages({
       clipboardItems,
     });
+
+    if (onboardingContext.currentStep === onboardingContext.steps.jumperWalkthrough)
+      onboardingContext.goToNextStep();
     upload({ files, slate });
   };
 
-  useEventListener({ type: "paste", handler: handlePaste }, []);
+  useEventListener({ type: "paste", handler: handlePaste }, [onboardingContext]);
 };
