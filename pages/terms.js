@@ -9,21 +9,22 @@ import WebsitePrototypeHeader from "~/components/core/WebsiteHeader";
 import WebsitePrototypeFooter from "~/components/core/WebsiteFooter";
 
 const STYLES_ROOT = css`
-  padding: 0 88px 128px 88px;
-  margin: -88px auto 0 auto;
   width: 100%;
-  background-color: ${Constants.system.grayLight6};
-
-  @media (max-width: ${Constants.sizes.mobile}px) {
-    display: block;
-    padding: 128px 24px;
-  }
+  height: 100%;
+  min-height: 100vh;
+  background-color: ${Constants.semantic.bgLight};
+  color: ${Constants.semantic.textGrayDark};
 `;
 
 const STYLES_CONTAINER = css`
-  max-width: 1440px;
-  width: 100%;
+  max-width: 1080px;
   margin: 0 auto;
+  padding: 160px 24px;
+
+  @media (max-width: ${Constants.sizes.mobile}px) {
+    max-width: 480px;
+    padding: 96px 16px;
+  }
 `;
 
 const STYLES_H1 = css`
@@ -74,8 +75,8 @@ const STYLES_CONTENT_BLOCK1 = css`
 `;
 
 const STYLES_CONTENT_BLOCK2 = css`
-  margin: -120px 0 0 auto;
-  width: 50%;
+  margin: -264px 0 0 auto;
+  width: 55%;
 
   @media (max-width: ${Constants.sizes.mobile}px) {
     margin: 48px 0 0 0;

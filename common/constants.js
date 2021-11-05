@@ -154,6 +154,7 @@ export const font = {
   text: `'inter-regular', -apple-system, BlinkMacSystemFont, arial, sans-serif`,
   semiBold: `'inter-semi-bold', -apple-system, BlinkMacSystemFont, arial, sans-serif`,
   medium: `'inter-medium', -apple-system, BlinkMacSystemFont, arial, sans-serif`,
+  bold: `'inter-bold', -apple-system, BlinkMacSystemFont, arial, sans-serif`,
   mono: `'mono', monaco, monospace`,
   monoBold: `'mono-bold', monaco, monospace`,
   monoCode: `'fira-code-regular', mono, monospace`,

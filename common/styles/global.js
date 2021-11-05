@@ -25,6 +25,11 @@ export const injectGlobalStyles = () => css`
   }
 
   @font-face {
+    font-family: 'inter-bold';
+    src: url('https://slate.textile.io/ipfs/bafybeigljfbymd52vnrie6qkcy4u4kplsz4yen2idpizhr3dvrgy7kufaq');
+  }
+
+  @font-face {
     font-family: 'inter-medium';
     src: url('https://slate.textile.io/ipfs/bafkreiapyxmqjwoowqpek2cjocouzxoalwlzwwbv3dscug3e5l2ok7xmqe');
   }

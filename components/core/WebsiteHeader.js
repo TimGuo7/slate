@@ -13,7 +13,6 @@ const STYLES_ROOT = css`
   background-color: ${Constants.semantic.bgBlurWhiteOP};
   backdrop-filter: blur(75px);
   z-index: ${Constants.zindex.header};
-  padding: 14px 24px;
 `;
 
 const STYLES_CONTAINER = css`
@@ -32,8 +31,11 @@ const STYLES_CONTAINER = css`
   line-height: 20px;
   letter-spacing: -0.01px;
   text-align: left;
+  padding: 14px 24px;
 
   @media (max-width: ${Constants.sizes.mobile}px) {
+    max-width: 480px;
+    padding: 14px 16px;
     display: flex;
     justify-content: space-between;
   }
