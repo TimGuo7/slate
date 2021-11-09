@@ -104,7 +104,7 @@ const STYLES_IMAGE_PREVIEW = (theme) => css`
   border-radius: 16px;
   margin-top: 8px;
   box-shadow: ${theme.shadow.lightSmall};
-  border: 1px solid ${theme.semantic.borderGrayLight};
+  border: 1px solid ${theme.semantic.borderGrayLight4};
   overflow: hidden;
   img {
     width: 100%;
@@ -126,7 +126,7 @@ const STYLES_COVER_IMG_DROP = (theme) => css`
   height: 100%;
   border-radius: 16px;
   background-color: ${theme.semantic.bgWhite};
-  border: 1px solid ${theme.semantic.borderGrayLight};
+  border: 1px solid ${theme.semantic.borderGrayLight4};
   @supports ((-webkit-backdrop-filter: blur(75px)) or (backdrop-filter: blur(75px))) {
     -webkit-backdrop-filter: blur(75px);
     backdrop-filter: blur(75px);
@@ -257,7 +257,7 @@ function FileMetadata({ file, ...props }) {
         <System.P3>{Strings.capitalize(file.type)}</System.P3>
       </div>
       <System.Divider
-        color="borderGrayLight"
+        color="borderGrayLight4"
         height={1}
         style={{ marginTop: 4, marginBottom: 4 }}
       />
@@ -271,7 +271,7 @@ function FileMetadata({ file, ...props }) {
       {Validations.isPreviewableImage(file?.type || "") ? (
         <>
           <System.Divider
-            color="borderGrayLight"
+            color="borderGrayLight4"
             height={1}
             style={{ marginTop: 4, marginBottom: 4 }}
           />
@@ -287,7 +287,7 @@ function FileMetadata({ file, ...props }) {
         </>
       ) : null}
       <System.Divider
-        color="borderGrayLight"
+        color="borderGrayLight4"
         height={1}
         style={{ marginTop: 4, marginBottom: 4 }}
       />
@@ -299,7 +299,7 @@ function FileMetadata({ file, ...props }) {
         <System.P3>{Utilities.formatDateToString(file.createdAt)}</System.P3>
       </div>
       <System.Divider
-        color="borderGrayLight"
+        color="borderGrayLight4"
         height={1}
         style={{ marginTop: 4, marginBottom: 4 }}
       />
@@ -390,7 +390,7 @@ export function MoreInfo({ external, viewer, isOwner, file, isOpen, onClose }) {
             <CoverImageUpload file={file} viewer={viewer} isFileOwner={isFileOwner} />
             <System.Divider
               style={{ marginLeft: 20, marginRight: 20 }}
-              color="borderGrayLight"
+              color="borderGrayLight4"
               width={1}
               height="unset"
             />
@@ -419,11 +419,11 @@ export function MoreInfoMobile({ external, viewer, isOwner, file, isOpen, onClos
           More Info
         </System.H5>
       </MobileJumper.Header>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <div style={{ padding: "13px 16px 11px" }}>
         <Jumper.ObjectPreview file={file} />
       </div>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <MobileJumper.Content>
         <CoverImageUpload isMobile file={file} viewer={viewer} isFileOwner={isFileOwner} />
         <FileMetadata file={file} style={{ marginTop: 22 }} />

@@ -180,11 +180,11 @@ export function EditInfoMobile({ file, isOpen, onClose }) {
           Edit Info
         </System.H5>
       </MobileJumper.Header>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <div style={{ padding: "13px 16px 11px" }}>
         <Jumper.ObjectPreview file={file} />
       </div>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <UpdateFileForm isMobile key={file.id} file={file} onClose={onClose} />
     </MobileJumper.Root>
   ) : null;

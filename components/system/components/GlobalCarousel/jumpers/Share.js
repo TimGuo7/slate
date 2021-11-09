@@ -148,11 +148,11 @@ export function ShareMobile({ file, data, viewer, isOpen, onClose }) {
           Share
         </System.H5>
       </MobileJumper.Header>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <div style={{ padding: "13px 16px 11px" }}>
         <Jumper.ObjectPreview file={file} />
       </div>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <MobileJumper.Content>
         <FileSharingButtons file={file} data={data} viewer={viewer} />
       </MobileJumper.Content>

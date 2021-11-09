@@ -472,11 +472,11 @@ export function EditChannelsMobile({ file, viewer, isOpen, onClose }) {
           autoFocus={viewer?.slates?.length === 0}
         />
       </MobileJumper.Header>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <div style={{ padding: "13px 16px 11px" }}>
         <Jumper.ObjectPreview file={file} />
       </div>
-      <System.Divider height={1} color="borderGrayLight" />
+      <System.Divider height={1} color="borderGrayLight4" />
       <MobileJumper.Content>
         <Channels
           header="Private"
