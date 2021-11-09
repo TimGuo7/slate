@@ -339,14 +339,31 @@ const STYLES_CAROUSEL_MOBILE_SLIDE_COUNT = css`
   transform: translate(-50%, -50%);
 `;
 
-function CarouselHeaderMobile({ current, total, onClose, onNextSlide, onPreviousSlide }) {
+function CarouselHeaderMobile({
+  current,
+  total,
+  onClose,
+  enableNextSlide,
+  enablePreviousSlide,
+  onNextSlide,
+  onPreviousSlide,
+}) {
   return (
     <nav css={STYLES_CAROUSEL_MOBILE_HEADER} style={{ justifyContent: "space-between" }}>
       <div style={{ width: 76 }}>
-        <button css={STYLES_ACTION_BUTTON} onClick={onPreviousSlide}>
+        <button
+          css={STYLES_ACTION_BUTTON}
+          style={{ visibility: enablePreviousSlide ? "visible" : "hidden" }}
+          onClick={onPreviousSlide}
+        >
           <SVG.ChevronLeft width={16} height={16} />
         </button>
-        <button style={{ marginLeft: 12 }} css={STYLES_ACTION_BUTTON} onClick={onNextSlide}>
+
+        <button
+          style={{ marginLeft: 12, visibility: enableNextSlide ? "visible" : "hidden" }}
+          css={STYLES_ACTION_BUTTON}
+          onClick={onNextSlide}
+        >
           <SVG.ChevronRight width={16} height={16} />
         </button>
       </div>
@@ -805,6 +822,8 @@ export function GlobalCarousel({
           onPreviousSlide={handlePrevious}
           onNextSlide={handleNext}
           onClose={handleClose}
+          enableNextSlide={index < objects.length - 1}
+          enablePreviousSlide={index > 0}
         />
       ) : (
         <CarouselHeader
