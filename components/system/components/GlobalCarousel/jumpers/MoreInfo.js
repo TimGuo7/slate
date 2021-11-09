@@ -148,6 +148,17 @@ function CoverImageUpload({ file, viewer, isMobile, isFileOwner }) {
     ref: coverImgDropzoneRef,
   });
 
+  if (Validations.isImageType(file?.type)) {
+    return (
+      <div style={{ marginTop: 14 }}>
+        <System.H6 color="textGray">Preview image</System.H6>
+        <div css={STYLES_IMAGE_PREVIEW}>
+          <img src={Strings.getURLfromCID(file.cid)} alt="file preview" />
+        </div>
+      </div>
+    );
+  }
+
   const handleInputChange = (e) => {
     e.persist();
     if (!e || !e.target) return;
