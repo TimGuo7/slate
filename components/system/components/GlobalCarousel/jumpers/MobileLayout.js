@@ -3,6 +3,7 @@ import * as Styles from "~/common/styles";
 
 import { css } from "@emotion/react";
 import { motion } from "framer-motion";
+import { FullHeightLayout } from "~/components/system/components/FullHeightLayout";
 
 /* -------------------------------------------------------------------------------------------------
  *  Root
@@ -12,7 +13,6 @@ const STYLES_JUMPER_MOBILE_WRAPPER = (theme) => css`
   ${Styles.VERTICAL_CONTAINER};
   position: fixed;
   width: 100%;
-  height: 100vh;
   top: 0;
   left: 0;
 
@@ -29,7 +29,8 @@ const STYLES_JUMPER_MOBILE_WRAPPER = (theme) => css`
 
 function Root({ children, ...props }) {
   return (
-    <motion.div
+    <FullHeightLayout
+      as={motion.div}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.25, ease: "easeInOut" }}
@@ -37,7 +38,7 @@ function Root({ children, ...props }) {
       {...props}
     >
       {children}
-    </motion.div>
+    </FullHeightLayout>
   );
 }
 
@@ -46,7 +47,7 @@ function Root({ children, ...props }) {
  * -----------------------------------------------------------------------------------------------*/
 
 const STYLES_JUMPER_MOBILE_HEADER = css`
-  ${Styles.VERTICAL_CONTAINER};
+  ${Styles.HORIZONTAL_CONTAINER_CENTERED};
   padding: 13px 16px 11px;
 `;
 
