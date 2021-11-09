@@ -157,7 +157,9 @@ export function EditInfo({ file, isOpen, onClose }) {
     <Jumper.AnimatePresence>
       {isOpen ? (
         <Jumper.Root onClose={onClose}>
-          <Jumper.Header>Edit info</Jumper.Header>
+          <Jumper.Header>
+            <System.H5 color="textBlack">Edit info</System.H5>
+          </Jumper.Header>
           <Jumper.Divider />
           <Jumper.Item>
             <Jumper.ObjectPreview file={file} />

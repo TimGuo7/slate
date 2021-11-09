@@ -111,7 +111,9 @@ export function Share({ file, data, viewer, isOpen, onClose }) {
     <Jumper.AnimatePresence>
       {isOpen ? (
         <Jumper.Root onClose={onClose}>
-          <Jumper.Header>Share</Jumper.Header>
+          <Jumper.Header>
+            <System.H5 color="textBlack">Share</System.H5>
+          </Jumper.Header>
           <Jumper.Divider />
           <Jumper.Item>
             <Jumper.ObjectPreview file={file} />

@@ -379,7 +379,9 @@ export function MoreInfo({ external, viewer, isOwner, file, isOpen, onClose }) {
     <Jumper.AnimatePresence>
       {isOpen ? (
         <Jumper.Root onClose={onClose}>
-          <Jumper.Header>More info</Jumper.Header>
+          <Jumper.Header>
+            <System.H5 color="textBlack">More info</System.H5>
+          </Jumper.Header>
           <Jumper.Divider />
           <Jumper.Item
             css={Styles.HORIZONTAL_CONTAINER}
