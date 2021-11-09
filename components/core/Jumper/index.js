@@ -156,7 +156,7 @@ function ObjectPreview({ file }) {
       style={{ color: Constants.system.green, width: "100%" }}
     >
       <div>
-        <SVG.CheckCircle />
+        <SVG.CheckCircle style={{ display: "block" }} />
       </div>
       <div style={{ marginLeft: 12, marginRight: 12 }}>
         <AnimateSharedLayout>
