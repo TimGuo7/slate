@@ -218,11 +218,9 @@ export default class ApplicationLayout extends React.Component {
           )}
           <Alert
             noWarning={
-              this.props.page?.id === "NAV_SIGN_IN"
+              this.props.page?.id === "NAV_SIGN_IN" || this.props.page?.id === "NAV_SURVEY"
                 ? true
-                : this.props.viewer
-                ? !this.props.viewer?.onboarding?.survey
-                : false
+                : !!this.props.viewer
             }
             onAction={this.props.onAction}
             id={this.props.isMobile ? "slate-mobile-alert" : null}

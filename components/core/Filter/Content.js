@@ -51,7 +51,7 @@ export function Content({ viewer, onAction, page, ...props }) {
   return (
     <div css={STYLES_DATAVIEWER_WRAPPER} {...props}>
       {objects.length ? (
-        <TagsOnboarding isActive={isOnboardingActive}>
+        <TagsOnboarding onAction={onAction} viewer={viewer} isActive={isOnboardingActive}>
           <DataView
             key="scene-files-folder"
             /** TODO(amine): when updating filters, update isOwner prop */

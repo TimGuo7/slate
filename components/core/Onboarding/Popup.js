@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as System from "~/components/system";
 
+import { motion } from "framer-motion";
 import { css } from "@emotion/react";
 import { ModalPortal } from "../ModalPortal";
 
@@ -32,14 +33,14 @@ const STYLES_POPUP_CONTENT = css`
 
 export default function Popup({ children, header, css, ...props }) {
   return (
-    <ModalPortal {...props}>
-      <div css={[STYLES_ONBOARDING_POPUP, css]}>
+    <ModalPortal>
+      <motion.div css={[STYLES_ONBOARDING_POPUP, css]} {...props}>
         <System.H5 as="h1" color="textBlack" css={STYLES_POPUP_HEADER}>
           {header}
         </System.H5>
         <System.Divider color="borderGrayLight" />
         <div css={STYLES_POPUP_CONTENT}>{children}</div>
-      </div>
+      </motion.div>
     </ModalPortal>
   );
 }
