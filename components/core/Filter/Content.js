@@ -7,6 +7,7 @@ import * as Styles from "~/common/styles";
 import { FileTypeGroup } from "~/components/core/FileTypeIcon";
 import { css } from "@emotion/react";
 import { useFilterContext } from "~/components/core/Filter/Provider";
+import { TagsOnboarding } from "~/components/core/Onboarding/Tags";
 
 import DataView from "~/components/core/DataView";
 import EmptyState from "~/components/core/EmptyState";
@@ -41,18 +42,27 @@ export function Content({ viewer, onAction, page, ...props }) {
   const [{ filterState }] = useFilterContext();
   const { objects } = filterState;
 
+  const isOnboardingActive =
+    viewer?.onboarding?.upload &&
+    !viewer?.onboarding?.tags &&
+    filterState?.type === "library" &&
+    objects.length > 0;
+
   return (
     <div css={STYLES_DATAVIEWER_WRAPPER} {...props}>
       {objects.length ? (
-        <DataView
-          key="scene-files-folder"
-          isOwner={true}
-          items={objects}
-          onAction={onAction}
-          viewer={viewer}
-          page={page}
-          view="grid"
-        />
+        <TagsOnboarding isActive={isOnboardingActive}>
+          <DataView
+            key="scene-files-folder"
+            /** TODO(amine): when updating filters, update isOwner prop */
+            isOwner={true}
+            items={objects}
+            onAction={onAction}
+            viewer={viewer}
+            page={page}
+            view="grid"
+          />
+        </TagsOnboarding>
       ) : (
         <EmptyState css={STYLES_EMPTY_STATE_WRAPPER}>
           <FileTypeGroup />
