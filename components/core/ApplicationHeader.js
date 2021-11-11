@@ -220,7 +220,7 @@ export default function ApplicationHeader({ viewer, page, data, onAction }) {
                 value={state.query}
               />
             </div>
-            <UploadOnboarding viewer={viewer}>
+            <UploadOnboarding onAction={onAction} viewer={viewer}>
               <Upload.Provider page={page} data={data} viewer={viewer}>
                 <Upload.Root data={data}>
                   <div css={STYLES_RIGHT}>

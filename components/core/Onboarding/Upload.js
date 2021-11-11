@@ -2,11 +2,12 @@ import * as React from "react";
 import * as Styles from "~/common/styles";
 import * as System from "~/components/system";
 import * as SVG from "~/common/svg";
-import * as Jumper from "~/components/core/Jumper";
+import * as Jumper from "~/components/system/components/fragments/Jumper";
 import * as Constants from "~/common/constants";
 
 import { css } from "@emotion/react";
 import { ModalPortal } from "~/components/core/ModalPortal";
+import { useIsomorphicLayoutEffect } from "~/common/hooks";
 
 import ProfilePhoto from "~/components/core/ProfilePhoto";
 import OnboardingPopup from "~/components/core/Onboarding/Popup";
@@ -16,7 +17,7 @@ import OnboardingOverlay from "~/components/core/Onboarding/Overlay";
  * Provider
  * -----------------------------------------------------------------------------------------------*/
 
-const UploadOnboardingContext = React.createContext({});
+const UploadOnboardingContext = React.createContext();
 export const useUploadOnboardingContext = () => React.useContext(UploadOnboardingContext);
 
 const steps = {
@@ -26,7 +27,7 @@ const steps = {
   finish: "finish",
 };
 
-function Provider({ children, viewer, ...props }) {
+function Provider({ children, viewer, onAction, ...props }) {
   const [currentStep, setCurrentStep] = React.useState(
     viewer?.onboarding?.upload ? steps.finish : steps.welcome
   );
@@ -40,6 +41,15 @@ function Provider({ children, viewer, ...props }) {
       jumperWalkthrough: "finish",
     };
     setCurrentStep((prev) => nextStep[prev]);
+  }, [currentStep]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (currentStep === steps.finish) {
+      onAction({
+        type: "UPDATE_VIEWER",
+        viewer: { onboarding: { ...viewer.onboarding, upload: true } },
+      });
+    }
   }, [currentStep]);
 
   return (
@@ -102,15 +112,6 @@ function Welcome({ viewer }) {
 /* -------------------------------------------------------------------------------------------------
  *  UploadWalkthrough
  * -----------------------------------------------------------------------------------------------*/
-
-const STYLES_POPUP_HEADER = css`
-  padding: 13px 16px 8px;
-`;
-
-const STYLES_POPUP_CONTENT = css`
-  padding: 16px;
-`;
-
 const STYLES_OVERLAY_ZINDEX = css`
   z-index: 1;
 `;
@@ -229,9 +230,9 @@ function UploadWalkthrough() {
   );
 }
 
-export function UploadOnboarding({ viewer, children }) {
+export function UploadOnboarding({ viewer, onAction, children }) {
   return (
-    <Provider viewer={viewer}>
+    <Provider viewer={viewer} onAction={onAction}>
       <Welcome viewer={viewer} />
       <UploadWalkthrough />
       {children}

@@ -7,7 +7,7 @@ import { ModalPortal } from "../ModalPortal";
 const STYLES_ONBOARDING_POPUP = (theme) => css`
   position: fixed;
   right: 25px;
-  bottom: 44px;
+  bottom: 32px;
   width: 320px;
   border-radius: 16px;
   box-shadow: ${theme.shadow.lightLarge};

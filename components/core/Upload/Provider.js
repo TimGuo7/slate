@@ -6,7 +6,7 @@ import * as Logging from "~/common/logging";
 import { useEventListener } from "~/common/hooks";
 import { useUploadOnboardingContext } from "~/components/core/Onboarding/Upload";
 
-const UploadContext = React.createContext({});
+const UploadContext = React.createContext();
 export const useUploadContext = () => React.useContext(UploadContext);
 
 export const Provider = ({ children, page, data, viewer }) => {
