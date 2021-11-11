@@ -1,14 +1,16 @@
 import * as React from "react";
 import * as Styles from "~/common/styles";
+import * as ObjectJumpers from "~/components/system/components/GlobalCarousel/jumpers";
 
 import { css } from "@emotion/react";
 import { H5, P2, P3 } from "~/components/system/components/Typography";
 import { AspectRatio } from "~/components/system";
-
 import { motion, useAnimation } from "framer-motion";
 import { useMounted, useMediaQuery } from "~/common/hooks";
+import { TagsButton } from "~/components/core/ObjectPreview/components";
 
 import ImageObjectPreview from "~/components/core/ObjectPreview/ImageObjectPreview";
+import { useTagsOnboardingContext } from "~/components/core/Onboarding/Tags";
 
 const STYLES_WRAPPER = (theme) => css`
   position: relative;
@@ -56,15 +58,15 @@ const STYLES_SELECTED_RING = (theme) => css`
   box-shadow: 0 0 0 2px ${theme.system.blue};
 `;
 
-// const STYLES_CONTROLS = css`
-//   position: absolute;
-//   z-index: 1;
-//   right: 16px;
-//   top: 16px;
-//   & > * + * {
-//     margin-top: 8px !important;
-//   }
-// `;
+const STYLES_CONTROLS = css`
+  position: absolute;
+  z-index: 1;
+  right: 16px;
+  top: 16px;
+  & > * + * {
+    margin-top: 8px !important;
+  }
+`;
 
 const STYLES_UPPERCASE = css`
   text-transform: uppercase;
@@ -75,18 +77,22 @@ export default function ObjectPreviewPrimitive({
   tag = "FILE",
   file,
   isSelected,
-  // viewer,
+  viewer,
   owner,
+  isOwner,
   // NOTE(amine): internal prop used to display
   isImage,
   onAction,
 }) {
+  const [isTagsJumperVisible, setTagsJumperVisibility] = React.useState(false);
+  const showTagsJumper = () => setTagsJumperVisibility(true);
+  const hideTagsJumper = () => setTagsJumperVisibility(false);
   // const { save, isSaved, saveCount } = useSaveHandler({ file, viewer });
   // const showSaveButton = viewer?.id !== file?.ownerId;
 
-  // const [areControlsVisible, setShowControls] = React.useState(false);
-  // const showControls = () => setShowControls(true);
-  // const hideControls = () => setShowControls(false);
+  const [areControlsVisible, setShowControls] = React.useState(false);
+  const showControls = () => setShowControls(true);
+  const hideControls = () => setShowControls(false);
 
   const description = file?.body;
   const media = useMediaQuery();
@@ -107,6 +113,8 @@ export default function ObjectPreviewPrimitive({
 
   const title = file.name || file.filename;
 
+  const onboardingContext = useTagsOnboardingContext();
+
   if (file?.coverImage && !isImage && !isLink) {
     return (
       <ImageObjectPreview
@@ -123,25 +131,29 @@ export default function ObjectPreviewPrimitive({
     <div css={[STYLES_WRAPPER, isSelected && STYLES_SELECTED_RING]}>
       <AspectRatio ratio={248 / 248}>
         <div css={Styles.VERTICAL_CONTAINER}>
-          <div
-            css={STYLES_PREVIEW}
-            //  onMouseEnter={showControls} onMouseLeave={hideControls}
-          >
-            {/* <AnimatePresence>
-          {areControlsVisible && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              css={STYLES_CONTROLS}
-            >
-              <LikeButton onClick={like} isLiked={isLiked} likeCount={likeCount} />
-              {showSaveButton && (
-                <SaveButton onSave={save} isSaved={isSaved} saveCount={saveCount} />
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence> */}
+          <div css={STYLES_PREVIEW} onMouseEnter={showControls} onMouseLeave={hideControls}>
+            {isOwner && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: areControlsVisible ? 1 : 0 }}
+                css={STYLES_CONTROLS}
+              >
+                <>
+                  <TagsButton
+                    onClick={() => (showTagsJumper(), onboardingContext?.goToNextStep?.call())}
+                  />
+                  <ObjectJumpers.EditChannels
+                    file={file}
+                    viewer={viewer}
+                    isOpen={isTagsJumperVisible}
+                    onClose={() => (
+                      hideTagsJumper(), hideControls(), onboardingContext?.goToNextStep?.call()
+                    )}
+                  />
+                </>
+              </motion.div>
+            )}
+
             {children}
           </div>
 
