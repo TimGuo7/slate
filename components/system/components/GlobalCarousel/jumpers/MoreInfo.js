@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Styles from "~/common/styles";
 import * as System from "~/components/system";
-import * as Jumper from "~/components/core/Jumper";
+import * as Jumper from "~/components/system/components/fragments/Jumper";
 import * as SVG from "~/common/svg";
 import * as Strings from "~/common/strings";
 import * as Utilities from "~/common/utilities";
@@ -11,7 +11,7 @@ import * as UserBehaviors from "~/common/user-behaviors";
 import * as Constants from "~/common/constants";
 import * as FileUtilities from "~/common/file-utilities";
 import * as Validations from "~/common/validations";
-import * as MobileJumper from "~/components/system/components/GlobalCarousel/jumpers/MobileLayout";
+import * as MobileJumper from "~/components/system/components/fragments/MobileJumper";
 
 import { LoaderSpinner } from "~/components/system/components/Loaders";
 import { Show } from "~/components/utility/Show";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as Jumper from "~/components/core/Jumper";
+import * as Jumper from "~/components/system/components/fragments/Jumper";
 import * as System from "~/components/system";
 import * as FileUtilities from "~/common/file-utilities";
 import * as Logging from "~/common/logging";
@@ -124,10 +124,7 @@ export function UploadJumper({ data }) {
   return (
     <Jumper.AnimatePresence>
       {isUploadJumperVisible ? (
-        <Jumper.Root
-          withOverlay={!isOnboarding}
-          onClose={() => (onboardingContext.goToNextStep(), hideUploadJumper())}
-        >
+        <Jumper.Root onClose={() => (onboardingContext.goToNextStep(), hideUploadJumper())}>
           <Jumper.Header>
             <System.H5 color="textBlack">Upload</System.H5>
           </Jumper.Header>

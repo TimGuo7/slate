@@ -46,7 +46,7 @@ function Root({ children, ...props }) {
  * -----------------------------------------------------------------------------------------------*/
 
 const STYLES_JUMPER_MOBILE_HEADER = css`
-  ${Styles.VERTICAL_CONTAINER};
+  ${Styles.HORIZONTAL_CONTAINER_CENTERED};
   padding: 13px 16px 11px;
 `;
 
@@ -83,7 +83,7 @@ const STYLES_JUMPER_MOBILE_FOOTER = (theme) => css`
   width: 100%;
   padding: 8px 16px;
 
-  border-top: 1px solid ${theme.semantic.borderGrayLight};
+  border-top: 1px solid ${theme.semantic.borderGrayLight4};
   background-color: ${theme.semantic.bgWhite};
   @supports ((-webkit-backdrop-filter: blur(75px)) or (backdrop-filter: blur(75px))) {
     background-color: ${theme.semantic.bgBlurWhite};

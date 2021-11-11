@@ -1,12 +1,12 @@
 import * as React from "react";
 import * as Styles from "~/common/styles";
 import * as System from "~/components/system";
-import * as Jumper from "~/components/core/Jumper";
+import * as Jumper from "~/components/system/components/fragments/Jumper";
 import * as SVG from "~/common/svg";
 import * as Actions from "~/common/actions";
 import * as UserBehaviors from "~/common/user-behaviors";
 import * as Constants from "~/common/constants";
-import * as MobileJumper from "~/components/system/components/GlobalCarousel/jumpers/MobileLayout";
+import * as MobileJumper from "~/components/system/components/fragments/MobileJumper";
 import * as Strings from "~/common/strings";
 import * as Validations from "~/common/validations";
 import * as Events from "~/common/custom-events";
@@ -360,7 +360,7 @@ const STYLES_EDIT_CHANNELS_HEADER = (theme) => css`
   color: ${theme.semantic.textGray};
 `;
 
-export function EditChannels({ file, viewer, isOpen, onClose }) {
+export function EditChannels({ file, viewer, isOpen, onClose, ...props }) {
   const [channels, { handleAddFileToChannel, handleCreateChannel }] = useChannels({
     viewer,
     file,
@@ -384,7 +384,7 @@ export function EditChannels({ file, viewer, isOpen, onClose }) {
   return (
     <Jumper.AnimatePresence>
       {isOpen ? (
-        <Jumper.Root onClose={() => (onClose(), clearQuery())}>
+        <Jumper.Root onClose={() => (onClose(), clearQuery())} {...props}>
           <Jumper.Header
             css={[STYLES_EDIT_CHANNELS_HEADER, Styles.CONTAINER_CENTERED]}
             style={{ paddingTop: 0, paddingBottom: 0 }}
@@ -394,7 +394,7 @@ export function EditChannels({ file, viewer, isOpen, onClose }) {
               value={searchQuery}
               onChange={handleQueryChange}
               searchResults={searchResults}
-              autoFocus={viewer?.slates?.length === 0}
+              autoFocus
               onAddFileToChannel={handleAddFileToChannel}
             />
           </Jumper.Header>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Styles from "~/common/styles";
 import * as System from "~/components/system";
-import * as Jumper from "~/components/core/Jumper";
+import * as Jumper from "~/components/system/components/fragments/Jumper";
 
 import { Show } from "~/components/utility/Show";
 
