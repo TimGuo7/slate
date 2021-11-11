@@ -9,7 +9,7 @@ export default async (req, res) => {
     return res.status(403).send({ decorator: "SERVER_CREATE_ONBOARDING_NOT_ALLOWED", error: true });
   }
 
-  const { tools, referrals, useCases } = req?.body?.data;
+  const { tools, referrals, useCases, upload, tags } = req?.body?.data;
   if (!tools || !referrals || !useCases) {
     return res
       .status(403)
@@ -22,11 +22,13 @@ export default async (req, res) => {
   }
   const { id } = userInfo;
 
-  const onboarding = Data.createOnboarding({
+  const onboarding = await Data.createOnboarding({
     userId: id,
     prevTools: tools,
     usecases: useCases,
     referrals,
+    upload,
+    tags,
   });
 
   if (!onboarding) {

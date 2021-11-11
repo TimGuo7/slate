@@ -4,6 +4,7 @@ import * as System from "~/components/system";
 import * as SVG from "~/common/svg";
 import * as Jumper from "~/components/system/components/fragments/Jumper";
 import * as Constants from "~/common/constants";
+import * as Actions from "~/common/actions";
 
 import { css } from "@emotion/react";
 import { ModalPortal } from "~/components/core/ModalPortal";
@@ -49,6 +50,7 @@ function Provider({ children, viewer, onAction, ...props }) {
         type: "UPDATE_VIEWER",
         viewer: { onboarding: { ...viewer.onboarding, upload: true } },
       });
+      Actions.updateOnboarding({ upload: true });
     }
   }, [currentStep]);
 

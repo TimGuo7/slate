@@ -527,6 +527,13 @@ export const createOnboarding = async (data) => {
   });
 };
 
+export const updateOnboarding = async (data) => {
+  return await returnJSON(`/api/onboarding/update`, {
+    ...DEFAULT_OPTIONS,
+    body: JSON.stringify({ data }),
+  });
+};
+
 export const linkTwitterAccount = async (data) => {
   return await returnJSON(`/api/twitter/link`, {
     ...DEFAULT_OPTIONS,

@@ -5,7 +5,6 @@ export default async ({ userId }) => {
     label: "GET_ONBOARDING_BY_USER_ID",
     queryFn: async (DB) => {
       let query = await DB.select("*").from("onboarding").where({ userId });
-      console.log(query);
 
       if (!query || query.error) {
         return null;

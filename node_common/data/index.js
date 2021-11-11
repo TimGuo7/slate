@@ -96,8 +96,9 @@ import pruneVerifications from "~/node_common/data/methods/prune-verifications";
 
 // NOTE(amine):
 // Onboarding postgres queries
-import createOnboarding from "~/node_common/data/methods/create-onboarding";
 import getOnboardingByUserId from "~/node_common/data/methods/get-onboarding-by-user-id";
+import createOnboarding from "~/node_common/data/methods/create-onboarding";
+import updateOnboardingByUserId from "~/node_common/data/methods/update-onboarding-by-id";
 
 // NOTE(jim):
 // one-offs
@@ -193,4 +194,5 @@ export {
   // NOTE(amine): Onboarding
   createOnboarding,
   getOnboardingByUserId,
+  updateOnboardingByUserId,
 };
