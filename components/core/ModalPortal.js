@@ -10,5 +10,10 @@ export const ModalPortal = ({ children }) => {
     return () => setMounted(false);
   }, []);
 
-  return mounted ? ReactDOM.createPortal(children, document.getElementById("modals_portal")) : null;
+  return mounted
+    ? ReactDOM.createPortal(
+        <div onClick={(e) => e.stopPropagation()}>{children}</div>,
+        document.getElementById("modals_portal")
+      )
+    : null;
 };
